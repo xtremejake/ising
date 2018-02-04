@@ -8,17 +8,19 @@ Develop base class and
 """
 from os import path
 import sys
-import errno
 import sympy as sp
 import numpy as np
-import glob
 import json
 import multiprocessing as mp
 
-from settings import * # will import the base directories of package
+BASE_DIR = path.dirname(__file__)
+PACKAGE_DIR = path.dirname(BASE_DIR)
+ASSETS_DIR = path.join(PACKAGE_DIR, 'assets')
 
-if CONSTANTS_DIR not in sys.path:
-    sys.path.insert(0, CONSTANTS_DIR)
+if ASSETS_DIR not in sys.path:
+    sys.path.insert(0, ASSETS_DIR)
+    
+print ASSETS_DIR
     
 from Constants import gas_constants
 
@@ -33,7 +35,7 @@ class IsingModel():
         self.model = ''
         self.num_cpus = num_cpus
         
-    def ising1D(self, capping_scheme=['R', 'NR', 'NRC', 'RC'], intrinsic_term='R', max_length=6, min_length=1):
+    def ising1D(self, capping_scheme=['R', 'NR', 'NRC', 'RC'], intrinsic_term='R', max_length=2, min_length=1):
         self.model = '1D Ising'        
         # generate extended names and create symbolic intrinsic energy terms 
         for item in capping_scheme:     
@@ -317,7 +319,7 @@ with open("PartitionFunctions_c34PR_mi_miip1_Regan.csv", "wb") as n:
             
 '''           
 if __name__ == '__main__':
-    cpus = mp.cpu_count()
+    cpus = 2#mp.cpu_count()
     model = IsingModel(num_cpus=cpus)
     
     model.ising1D()

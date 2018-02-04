@@ -11,5 +11,6 @@ import sys
 BASE_DIR = os.path.dirname(__file__)
 PACKAGE_DIR = os.path.dirname(BASE_DIR)
 ASSETS_DIR = os.path.join(PACKAGE_DIR, 'assets')
-CONSTANTS_DIR = os.path.join(ASSETS_DIR, 'constants')
-MODELS_DIR = os.path.join(ASSETS_DIR, 'models') 
+
+if __name__ == "__main__":
+    print ASSETS_DIR
