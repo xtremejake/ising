@@ -1,0 +1,16 @@
+.DS_Store
+.ipynb_checkpoints
+node_modules
+/pip_test
+/_python_build
+*.pyc
+__pycache__
+ising/dist/
+ising/ising.egg-info/
+*.swp
+.vscode/
+.idea/**
+/build/
+[Bb]uild/
+*.whl
+*.pickle
