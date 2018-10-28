@@ -1,0 +1,3 @@
+include README.md
+#include docs/*.txt
+#include funniest/data.json # include some data here to test
