@@ -1,10 +1,11 @@
 """
+Created on Tue Sep 11 09:30:06 2017
+
+@author: xtremejake
+
 To generate weighted partition functions to be used in 
 fitting nearest neighbor models. These can be read into 
 Ising.py to be used in minimization routines.
-
-Will change methods to support additional models.
-Develop base class and 
 """
 from os import path
 import sys
@@ -19,8 +20,7 @@ ASSETS_DIR = path.join(PACKAGE_DIR, 'assets')
 
 if ASSETS_DIR not in sys.path:
     sys.path.insert(0, ASSETS_DIR)
-    
-print ASSETS_DIR
+
     
 from Constants import gas_constants
 
