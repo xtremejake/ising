@@ -8,13 +8,15 @@ fitting nearest neighbor models. These can be read into
 Ising.py to be used in minimization routines.
 """
 import os
-import sys
 import sympy as sp
 import numpy as np
 import json
 import multiprocessing as mp
 
 from ..assets.Constants import gas_constants
+
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(os.path.dirname(FILE_DIR), 'models')
 
 class PartitionGenerator():
     '''
@@ -29,16 +31,21 @@ class PartitionGenerator():
             raise ValueError('Supplied model %s is not supported. Please select from: %s' % (model, self._supported_models))
         
         self.units = units
+        self.min_length = min_length
+        self.max_length = max_length
         self.intrinsic_energies = {}
-        self.extended_names = self._extend_names()
+        self.extended_names = self._extend_names(intrinsic)
 
         # multiprocessing
         self.num_cpus = num_cpus
-        if self.num_cpus = -1:
+        if self.num_cpus==-1:
             self.num_cpus = mp.cpu_count()
+        
+        # calcluate partition functions
+        self._calculate()
 
         
-    def _extend_names(self):
+    def _extend_names(self, intrinsic):
         '''
         This will extend the names to max_length supplied, defining intrinsic energy symbols in the process
 
@@ -55,9 +62,9 @@ class PartitionGenerator():
 
             # extend names
             if u==intrinsic:
-                ext = [ u.replace(intrinsic, intrinsic*l) for l in np.arange(min_length,max_length+1) ]
+                ext = [ u.replace(intrinsic, intrinsic*l) for l in np.arange(self.min_length, self.max_length+1) ]
             else:
-                ext = [ u.replace(intrinsic, intrinsic*l) for l in np.arange(min_length,max_length) ]
+                ext = [ u.replace(intrinsic, intrinsic*l) for l in np.arange(self.min_length, self.max_length) ]
             extended_names.extend(ext)
         return extended_names
         
@@ -73,7 +80,7 @@ class PartitionGenerator():
         self.model_pfs = [PartitionFunction(item, intrinsic_energies=self.intrinsic_energies) for item in self.extended_names]
         
         if self.num_cpus==1:
-            self.partition_functions = [evaluate_pf(PartitionFunction(item, intrinsic_energies=self.intrinsic_energies)) for item in self.extended)names]
+            self.partition_functions = [evaluate_pf(PartitionFunction(item, intrinsic_energies=self.intrinsic_energies)) for item in self.extended_names]
         else:
             pool = mp.Pool(self.num_cpus)
             self.partition_functions = pool.map(evaluate_pf, self.model_pfs)
@@ -85,7 +92,7 @@ class PartitionGenerator():
         
 
     def save_model(self, filename):
-        filepath = path.join(MODELS_DIR, filename)
+        filepath = os.path.join(MODELS_DIR, filename)
         
         if filename in self.existing_models:
             decision = raw_input('Caution! There is an existing model with this name. Would you like to overwrite? [y/n] : ')
@@ -338,7 +345,7 @@ with open("PartitionFunctions_c34PR_mi_miip1_Regan.csv", "wb") as n:
             
 '''           
 if __name__ == '__main__':
-    cpus = 2#mp.cpu_count()
+    cpus = 2
     model = IsingModel(num_cpus=cpus)
     
     model.ising1D()
