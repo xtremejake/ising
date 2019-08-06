@@ -1,0 +1,82 @@
+Here are some notes to put on the confluence:
+
+ACL NOTES:
+Larger philosophical thoughts:
+	1.	we need to setup good transfer learning pipelines and strategies for ner
+	3.	We need to setup some automatic labeling strategies that are intuitive and easy to use for ner and others. Label based on rules. Labeling has proven to be very costly to continuously do.
+	5.	We need a good way of intelligently sharing information across datasets and teams for ner. Ideally this should require no programming but allow the model to decide what examples to use in pre-training
+	
+	7.	Much like the automatic labeling, we also need a way to auto evaluate based on some good rules. The sentiment preds on hello are a problem that can easily be corrected with 100% true label if the model predicts anything there.
+	
+	9.	Need a good transformer based encoder, domain switching model, and a way to encode context in previous chats.
+	
+	11.	This field is missing a few important things. There should be more scrutiny over the experimental setup. This includes how people select and split data, how the training samples are selected, and how these impact performance outputs. The work is entirely too speculative with little to no data to support. What data do exist, authors rely upon conceptual arguments from linguistic theory, and twist a few unrelated findings supporting those theories, as evidence for the validity of their own approaches. This fields needs more rigorous error analysis, more rigorous experimental design, and more rigorous reviews. In addition to these things, data are scarce, yet researchers rely upon outdated data. In no other scientific field would this be acceptable. Students should be required to collect data in addition to conducting analysis on it. Can I create something that would allow people to collect data in this way, and then profit from it by continuing to have residuals associated with with the reuse and profit that are reasonable?
+	
+	13.	Representation learning. Trying to determine the minimal amount of information to transmit in a message. I don’t fully agree with the core premise of the research, and it seems redundant to just plain backprop because the information is passing through a sender network anyway. Why does it matter? This is similar to the way biophysicists use single molecule experiments to quote the bulk energetic properties of a system. Why go through all the fancy equipment and measurements to just calculate a number you could have measured more easily in bulk?
+
+	15.	Mastermind game to learn RL. Has implications and connections to guess what game for representation by rachel out of amsterdam university. 
+	
+
+
+
+
+Monday 29th:
+
+   - to read
+         Quarterion networks, small networks with much fewer parameters without performance loss https://transacl.org/ojs/index.php/tacl/article/view/1619
+          Document grounding - a way to encode the type of Conversation in dialogue https://www.aclweb.org/anthology/P19-1002
+
+	•	Identifying topic shifts in text documents - useful for identifying when someone is trying to buy/sell product, or negotiating, etc. https://transacl.org/ojs/index.php/tacl/article/view/1619
+
+
+	•	Encoding user behavior into classification model along with other metadata. https://transacl.org/ojs/index.php/tacl/article/view/1619
+
+	•	Jointly training named entity recognition using multiple datasets https://www.aclweb.org/anthology/P19-1002
+
+
+	•	Transfer learning named entity recognition systems. Perhaps some useful information on how to few or zero shot learn transfer models from a baseline model https://www.aclweb.org/anthology/P19-1015
+
+	•	cross domain ner training https://www.aclweb.org/anthology/P19-1236
+	
+   - using domain detection as a means to improve classification. Here the results they show are not as clear this actually improves, but this is still relevant for understanding how to switch between rates and credit chat lines in a sequence. https://www.aclweb.org/anthology/P19-1186
+
+	•	really cool way of just using reference information in Wikipedia for identifying entities. This works by creating a set of coherence rules for selecting candidate entities. This constrains the choices in a sensible way. This may be useful when training on financial entities if we can encode the rules somehow in this way. For example, ticker, coupon, maturity mentions come in that pattern. Is there a way we can extend this? How do we utilize our labeled data to create these nice constraints. https://www.aclweb.org/anthology/P19-1187
+
+
+	•	Use reinforcement learning as a way to select data samples from a number of exogenous source domains for ner, and use them to improve performance on a target dataset. https://www.aclweb.org/anthology/P19-1189 really nice talk
+
+
+            
+Tuesday 30th
+
+  - low latency speech recognition. Great talk. Invited Talk 1 "Simultaneous Translation: Recent Advances and Remaining Challenges"  %by Liang Huang
+
+ - standard test split evaluation in pos tagging and ner https://www.aclweb.org/anthology/P19-1267
+           
+	•	great talk on error analysis and model selection in deep learning models. A must read. https://www.aclweb.org/anthology/P19-1267
+	            
+	•	Annotation suggestions. Good when you show 50/50, but fearful that for more complicated tasks, annotater will get lazy, although they did not show this. https://www.aclweb.org/anthology/P19-1265
+            
+ - a tool to do model selection for nlp, open source, interfaces well (they say) with common deep learning libraries. We should try this
+https://www.aclweb.org/anthology/P19-1281
+            
+ - entity linking and pretraining Bert for domain adaptation https://www.aclweb.org/anthology/P19-1335
+The data and code are available at https://github.com/lajanugen/zeshel.
+
+	•	adversarial  networks for low resource languages. I could not understand as much of the implementation. During this talk. Will have to investigate further https://www.aclweb.org/anthology/P19-1336
+            
+
+Wednesday July 31st
+
+ - ethics and chatbots. Not entirely compelling stuff. Soft, but outlines concerns to be mindful of using disaster cases like Alexa and google. 
+
+	•	How to store memory in conversational system. This is relevant for any bot we build, but also when interpreting summaries, and when considering which chat lines are linked to sentiment predictions https://www.aclweb.org/anthology/P19-1434
+	•	Great tool for model selection and hyperparam optimizations https://flambe.ai/en/latest/
+	•	Terminal based annotation tool https://jkk.name/slate/
+	•	Visualize embeddings https://github.com/uber-research/parallax
+	•	Translation machine quality without access to translation text https://github.com/Unbabel/OpenKiwi
+
+Friday 2nd:
+    - sender received message encoding, zipfs law, minimal information encoding compared to Natural language
+
+ - adversarial networks for one hop and multi hop qa. The concepts for antonym, grammar errors, synonyms, misspellings, and adversarial training data generation would be useful for creating bootstrapped training data that has the opposite effect. There are also some nice slides on work to create antonym embeddings so that when training, those words are separated in word vector space.  https://github.com/WolfNiu/AdversarialDialogue
